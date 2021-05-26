@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnkaKafe.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,33 @@ namespace AnkaKafe.UI
 {
     public partial class AnaForm : Form
     {
+        KafeVeri db = new KafeVeri();
         public AnaForm()
         {
+            OrnekUrunleriEkle();
             InitializeComponent();
+            masalarImageList.Images.Add("bos", Resource.bos);
+            masalarImageList.Images.Add("dolu", Resource.dolu);
+            MasalariOlustur();
+        }
+
+        private void OrnekUrunleriEkle()
+        {
+            db.Urunler.Add(new Urun() { UrunAd = "Çay", BirimFiyat = 4.00m });
+            db.Urunler.Add(new Urun() { UrunAd = "Simit", BirimFiyat = 5.00m });
+        }
+
+        private void MasalariOlustur()
+        {           
+            ListViewItem lvi;
+            for (int i = 1; i <= db.MasaAdet; i++)
+            {
+                lvi = new ListViewItem();
+                lvi.Tag = i; // Masa noyu her bir ögenin tag property'sinde saklayalım
+                lvi.Text = "Masa " + i;
+                lvi.ImageKey = "bos";
+                lvwMasalar.Items.Add(lvi);
+            }
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -27,6 +52,40 @@ namespace AnkaKafe.UI
             {
                 new GecmisSiparislerForm().ShowDialog();
             }
+        }
+
+        private void lvwMasalar_DoubleClick(object sender, EventArgs e)
+        {
+            ListViewItem lvi = lvwMasalar.SelectedItems[0];
+            int masaNo = (int)lvi.Tag; // unboxing
+            lvi.ImageKey = "dolu";
+
+            // todo : eğer bu masada önceden sipariş yoksa oluştur
+            Siparis siparis = SiparisBul(masaNo);
+
+            if(siparis == null)
+            {
+                siparis = new Siparis() { MasaNo = masaNo };
+                db.AktifSiparisler.Add(siparis);
+            }
+
+            // todo : bu siparişi başka bir formda aç
+            SiparisForm siparisForm = new SiparisForm(db, siparis);
+            siparisForm.ShowDialog();
+        }
+
+        private Siparis SiparisBul(int masaNo)
+        {
+            // return db.AktifSiparisler.FirstOrDefault(s => s.MasaNo == masaNo); // (FirstOrDefault) şarta uyan ilk elemanı verir
+
+            foreach (Siparis siparis in db.AktifSiparisler)
+            {
+                if(siparis.MasaNo == masaNo)
+                {
+                    return siparis;
+                }
+            }
+            return null;
         }
     }
 }
