@@ -15,23 +15,25 @@ namespace AnkaKafe.UI
     {
         private readonly KafeVeri _db;
         private readonly Siparis _siparis;
+        private readonly BindingList<SiparisDetay> _blSiparisDetaylar;
 
         // yeni bir sipariş formu oluştururken bu parametreler zorunlu
         public SiparisForm(KafeVeri kafeVeri, Siparis siparis)
         {
             _db = kafeVeri;
             _siparis = siparis;
+            _blSiparisDetaylar = new BindingList<SiparisDetay>(siparis.SiparisDetaylar);
             InitializeComponent();
-            MasaNoGuncelle();
-            FiyatNoGuncelle();
             UrunleriGoster();
+            MasaNoGuncelle();
+            FiyatGuncelle();
             DetaylariListele();
+            _blSiparisDetaylar.ListChanged += _blSiparisDetaylar_ListChanged;
         }
 
-        private void DetaylariListele()
+        private void _blSiparisDetaylar_ListChanged(object sender, ListChangedEventArgs e)
         {
-            dgvSiparisDetaylar.DataSource = null;
-            dgvSiparisDetaylar.DataSource = _siparis.SiparisDetaylar;
+            FiyatGuncelle();
         }
 
         private void UrunleriGoster()
@@ -39,7 +41,7 @@ namespace AnkaKafe.UI
             cboUrun.DataSource = _db.Urunler;
         }
 
-        private void FiyatNoGuncelle()
+        private void FiyatGuncelle()
         {
             lblOdemeTutar.Text = _siparis.ToplamTutarTL;
         }
@@ -53,15 +55,36 @@ namespace AnkaKafe.UI
         private void btnEkle_Click(object sender, EventArgs e)
         {
             Urun urun = (Urun)cboUrun.SelectedItem;
+
             SiparisDetay siparisDetay = new SiparisDetay()
             {
                 UrunAd = urun.UrunAd,
                 BirimFiyat = urun.BirimFiyat,
                 Adet = (int)nudAdet.Value
             };
-            _siparis.SiparisDetaylar.Add(siparisDetay);
-            DetaylariListele();
-            FiyatNoGuncelle();
+
+            // _blSiparisDetaylar içinde _siparis.SiparisDetaylar'ı da içerdiği için
+            // aynı zamanda Form'dan gelen _siparis nesnesinin detaylarına da bu detayı ekleyecektir
+            // ve datagridview'ı kendindeki verilerin değiştiği konusunda bilgilendirecektir.
+            _blSiparisDetaylar.Add(siparisDetay);
+        }
+        private void DetaylariListele()
+        {
+            dgvSiparisDetaylar.DataSource = _blSiparisDetaylar;
+        }
+
+        private void dgvSiparisDetaylar_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            DialogResult dr = MessageBox.Show(
+                text : "Seçili sipariş detayları silinecektir. Onaylıyor musun?",
+                caption : "Silme Olayı",
+                buttons : MessageBoxButtons.YesNo,
+                icon : MessageBoxIcon.Exclamation,
+                defaultButton :MessageBoxDefaultButton.Button2
+            );
+
+            // true atamanız sonucunda satır silme işleminin önüne geçmiş olursunuz
+            e.Cancel = dr == DialogResult.No;
         }
     }
 }
