@@ -25,6 +25,13 @@ namespace AnkaKafe.UI
             MasaNoGuncelle();
             FiyatNoGuncelle();
             UrunleriGoster();
+            DetaylariListele();
+        }
+
+        private void DetaylariListele()
+        {
+            dgvSiparisDetaylar.DataSource = null;
+            dgvSiparisDetaylar.DataSource = _siparis.SiparisDetaylar;
         }
 
         private void UrunleriGoster()
@@ -41,6 +48,20 @@ namespace AnkaKafe.UI
         {
             Text = $"Masa {_siparis.MasaNo} Sipariş Bilgileri";
             lblMasaNo.Text = _siparis.MasaNo.ToString("");
+        }
+
+        private void btnEkle_Click(object sender, EventArgs e)
+        {
+            Urun urun = (Urun)cboUrun.SelectedItem;
+            SiparisDetay siparisDetay = new SiparisDetay()
+            {
+                UrunAd = urun.UrunAd,
+                BirimFiyat = urun.BirimFiyat,
+                Adet = (int)nudAdet.Value
+            };
+            _siparis.SiparisDetaylar.Add(siparisDetay);
+            DetaylariListele();
+            FiyatNoGuncelle();
         }
     }
 }

@@ -183,6 +183,7 @@ namespace AnkaKafe.UI
             this.btnEkle.TabIndex = 16;
             this.btnEkle.Text = "EKLE";
             this.btnEkle.UseVisualStyleBackColor = true;
+            this.btnEkle.Click += new System.EventHandler(this.btnEkle_Click);
             // 
             // label7
             // 
