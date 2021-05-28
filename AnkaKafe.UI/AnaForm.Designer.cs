@@ -30,6 +30,7 @@ namespace AnkaKafe.UI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnaForm));
             this.lvwMasalar = new System.Windows.Forms.ListView();
             this.masalarImageList = new System.Windows.Forms.ImageList(this.components);
             this.tsmiUrunler = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +90,7 @@ namespace AnkaKafe.UI
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lvwMasalar);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "AnaForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
