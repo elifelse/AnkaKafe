@@ -29,12 +29,17 @@ namespace AnkaKafe.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.nudBirimFiyat = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.btnEkle = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtUrunAd = new System.Windows.Forms.TextBox();
             this.dgvUrunler = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnIptal = new System.Windows.Forms.Button();
+            this.btnDuzenle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudBirimFiyat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUrunler)).BeginInit();
             this.SuspendLayout();
@@ -66,6 +71,7 @@ namespace AnkaKafe.UI
             this.btnEkle.TabIndex = 8;
             this.btnEkle.Text = "EKLE";
             this.btnEkle.UseVisualStyleBackColor = true;
+            this.btnEkle.Click += new System.EventHandler(this.btnEkle_Click);
             // 
             // label1
             // 
@@ -86,23 +92,80 @@ namespace AnkaKafe.UI
             // 
             // dgvUrunler
             // 
+            this.dgvUrunler.AllowUserToAddRows = false;
+            this.dgvUrunler.AllowUserToDeleteRows = false;
             this.dgvUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvUrunler.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvUrunler.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvUrunler.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUrunler.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
             this.dgvUrunler.Location = new System.Drawing.Point(12, 81);
+            this.dgvUrunler.MultiSelect = false;
             this.dgvUrunler.Name = "dgvUrunler";
+            this.dgvUrunler.ReadOnly = true;
+            this.dgvUrunler.RowHeadersVisible = false;
             this.dgvUrunler.RowHeadersWidth = 62;
             this.dgvUrunler.RowTemplate.Height = 33;
-            this.dgvUrunler.Size = new System.Drawing.Size(754, 525);
+            this.dgvUrunler.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUrunler.Size = new System.Drawing.Size(929, 451);
             this.dgvUrunler.TabIndex = 12;
+            this.dgvUrunler.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUrunler_KeyDown);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "UrunAd";
+            this.Column1.HeaderText = "Ürün Adı";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 126;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "BirimFiyat";
+            dataGridViewCellStyle1.Format = "₺0.00";
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column2.HeaderText = "Birim Fiyatı";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 145;
+            // 
+            // btnIptal
+            // 
+            this.btnIptal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnIptal.Location = new System.Drawing.Point(554, 40);
+            this.btnIptal.Name = "btnIptal";
+            this.btnIptal.Size = new System.Drawing.Size(133, 36);
+            this.btnIptal.TabIndex = 13;
+            this.btnIptal.Text = "İPTAL";
+            this.btnIptal.UseVisualStyleBackColor = true;
+            this.btnIptal.Visible = false;
+            this.btnIptal.Click += new System.EventHandler(this.btnIptal_Click);
+            // 
+            // btnDuzenle
+            // 
+            this.btnDuzenle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnDuzenle.Location = new System.Drawing.Point(12, 538);
+            this.btnDuzenle.Name = "btnDuzenle";
+            this.btnDuzenle.Size = new System.Drawing.Size(929, 53);
+            this.btnDuzenle.TabIndex = 14;
+            this.btnDuzenle.Text = "SEÇİLİ ÜRÜNLERİ DÜZENLE";
+            this.btnDuzenle.UseVisualStyleBackColor = true;
+            this.btnDuzenle.Click += new System.EventHandler(this.btnDuzenle_Click);
             // 
             // UrunlerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(778, 618);
+            this.ClientSize = new System.Drawing.Size(953, 603);
+            this.Controls.Add(this.btnDuzenle);
+            this.Controls.Add(this.btnIptal);
             this.Controls.Add(this.dgvUrunler);
             this.Controls.Add(this.nudBirimFiyat);
             this.Controls.Add(this.label2);
@@ -128,5 +191,9 @@ namespace AnkaKafe.UI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtUrunAd;
         private System.Windows.Forms.DataGridView dgvUrunler;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.Button btnIptal;
+        private System.Windows.Forms.Button btnDuzenle;
     }
 }

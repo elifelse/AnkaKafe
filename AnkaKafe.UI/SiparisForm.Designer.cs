@@ -41,6 +41,10 @@ namespace AnkaKafe.UI
             this.cboUrun = new System.Windows.Forms.ComboBox();
             this.nudAdet = new System.Windows.Forms.NumericUpDown();
             this.dgvSiparisDetaylar = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnEkle = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lblMasaNo = new System.Windows.Forms.Label();
@@ -59,6 +63,7 @@ namespace AnkaKafe.UI
             this.btnAnasayfa.TabIndex = 29;
             this.btnAnasayfa.Text = "ANASAYFAYA DÖN";
             this.btnAnasayfa.UseVisualStyleBackColor = false;
+            this.btnAnasayfa.Click += new System.EventHandler(this.btnAnasayfa_Click);
             // 
             // btnOde
             // 
@@ -71,6 +76,7 @@ namespace AnkaKafe.UI
             this.btnOde.TabIndex = 28;
             this.btnOde.Text = "ÖDEME AL";
             this.btnOde.UseVisualStyleBackColor = false;
+            this.btnOde.Click += new System.EventHandler(this.btnOde_Click);
             // 
             // btnIptal
             // 
@@ -83,6 +89,7 @@ namespace AnkaKafe.UI
             this.btnIptal.TabIndex = 27;
             this.btnIptal.Text = "SİPARİŞ İPTAL";
             this.btnIptal.UseVisualStyleBackColor = false;
+            this.btnIptal.Click += new System.EventHandler(this.btnIptal_Click);
             // 
             // lblOdemeTutar
             // 
@@ -170,6 +177,11 @@ namespace AnkaKafe.UI
             this.dgvSiparisDetaylar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSiparisDetaylar.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvSiparisDetaylar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSiparisDetaylar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4});
             this.dgvSiparisDetaylar.Location = new System.Drawing.Point(12, 82);
             this.dgvSiparisDetaylar.Name = "dgvSiparisDetaylar";
             this.dgvSiparisDetaylar.ReadOnly = true;
@@ -180,6 +192,38 @@ namespace AnkaKafe.UI
             this.dgvSiparisDetaylar.Size = new System.Drawing.Size(663, 543);
             this.dgvSiparisDetaylar.TabIndex = 17;
             this.dgvSiparisDetaylar.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvSiparisDetaylar_UserDeletingRow);
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "UrunAd";
+            this.Column1.HeaderText = "Ürün Adı";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.DataPropertyName = "BirimFiyat";
+            this.Column2.HeaderText = "Birim Fiyatı";
+            this.Column2.MinimumWidth = 8;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.DataPropertyName = "Adet";
+            this.Column3.HeaderText = "Adet";
+            this.Column3.MinimumWidth = 8;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "TutarTL";
+            this.Column4.HeaderText = "Tutar";
+            this.Column4.MinimumWidth = 8;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // btnEkle
             // 
@@ -264,5 +308,9 @@ namespace AnkaKafe.UI
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblMasaNo;
         private System.Windows.Forms.DataGridView dgvSiparisDetaylar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }

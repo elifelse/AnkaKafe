@@ -30,7 +30,7 @@ namespace AnkaKafe.UI
         }
 
         private void MasalariOlustur()
-        {           
+        {
             ListViewItem lvi;
             for (int i = 1; i <= db.MasaAdet; i++)
             {
@@ -44,13 +44,13 @@ namespace AnkaKafe.UI
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            if(e.ClickedItem == tsmiUrunler)
+            if (e.ClickedItem == tsmiUrunler)
             {
-                new UrunlerForm().ShowDialog();
+                new UrunlerForm(db).ShowDialog();
             }
-            else if(e.ClickedItem == tsmiGecmisSiparis)
+            else if (e.ClickedItem == tsmiGecmisSiparis)
             {
-                new GecmisSiparislerForm().ShowDialog();
+                new GecmisSiparislerForm(db).ShowDialog();
             }
         }
 
@@ -60,18 +60,24 @@ namespace AnkaKafe.UI
             int masaNo = (int)lvi.Tag; // unboxing
             lvi.ImageKey = "dolu";
 
-            // todo : eğer bu masada önceden sipariş yoksa oluştur
+            // eğer bu masada önceden sipariş yoksa oluştur
             Siparis siparis = SiparisBul(masaNo);
 
-            if(siparis == null)
+            if (siparis == null)
             {
                 siparis = new Siparis() { MasaNo = masaNo };
                 db.AktifSiparisler.Add(siparis);
             }
 
-            // todo : bu siparişi başka bir formda aç
+            // bu siparişi başka bir formda aç
             SiparisForm siparisForm = new SiparisForm(db, siparis);
             siparisForm.ShowDialog();
+
+            // Sipariş formu kapandıktan sonra sipariş durumunu kontrol et
+            if (siparis.Durum != SiparisDurum.Aktif)
+            {
+                lvi.ImageKey = "bos";
+            }
         }
 
         private Siparis SiparisBul(int masaNo)
@@ -80,7 +86,7 @@ namespace AnkaKafe.UI
 
             foreach (Siparis siparis in db.AktifSiparisler)
             {
-                if(siparis.MasaNo == masaNo)
+                if (siparis.MasaNo == masaNo)
                 {
                     return siparis;
                 }
