@@ -62,7 +62,7 @@ namespace AnkaKafe.UI
                 DialogResult dr = MessageBox.Show(
                     "Seçili ürün silinecektir. Onaylıyor musunuz?",
                     "Ürün Silme Onayı",
-                    MessageBoxButtons.YesNo,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation,
                     MessageBoxDefaultButton.Button2
                 );
